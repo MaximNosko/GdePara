@@ -61,13 +61,7 @@ public class Settings extends AppCompatActivity
                 z.execute();
             }
         });
-        //sPref = getPreferences(MODE_PRIVATE);
-        //String savedText = sPref.getString(group_text, "");
-        //((EditText)findViewById(R.id.groupInput)).setText(savedText);
-        //String savedId = sPref.getString(group_id, "");
-        //((TextView)findViewById(R.id.showGroupId)).setText(savedId);
         final SharedPreferences sPref2= PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        //SharedPreferences.Editor editor = sPref.edit();
         String group_text_string=(sPref2.getString(group_text, ""));
         ((EditText)findViewById(R.id.groupInput)).setText(group_text_string);
         String group_id_string=(sPref2.getString(group_id, ""));
@@ -82,11 +76,6 @@ public class Settings extends AppCompatActivity
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            //String htmlText = "<html><body>... </body></html>";
-            //WebView webView = (WebView) findViewById(R.id.wv);
-            //webView.loadData(htmlText, "text/html", "en_US");
-            //TextView textView = (TextView)findViewById(R.id.test_text);
-            //textView.setText("Подготовка запроса...");
             EditText et=(EditText)findViewById(R.id.groupInput);
             txt=et.getText().toString();
             txt_rus=et.getText().toString();
@@ -99,12 +88,6 @@ public class Settings extends AppCompatActivity
             String rez=":(";
             try
             {
-                //TextView textView = (TextView)findViewById(R.id.test_text);
-                //textView.setText("Запрос...");
-                //String pattern = "yyyy.MM.dd";
-                //SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-                //String date = simpleDateFormat.format(new Date());
-                //URL obj = new URL("https://ruz.fa.ru/api/schedule/group/8891?start="+date+"&finish="+date+"&lng=1");
                 txt= URLEncoder.encode(txt, StandardCharsets.UTF_8.toString());
                 URL obj=new URL("https://ruz.fa.ru/api/search?term="+txt+"&type=group");
                 HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
@@ -138,23 +121,12 @@ public class Settings extends AppCompatActivity
         protected void onPostExecute(String s)
         {
             super.onPostExecute(s);
-            /*String htmlText = "<html>"+s+"</html>";
-            WebView webView = (WebView) findViewById(R.id.wv);
-            webView.loadData(htmlText, "text/html", "en_US");*/
-            //TextView textView = (TextView)findViewById(R.id.test_text);
-            //textView.setText(s);
             if(s.equals(""))
             {
 
             }
             else
             {
-                //sPref = getPreferences(MODE_PRIVATE);
-                //SharedPreferences.Editor ed = sPref.edit();
-                //ed.putString(group_id, s);
-                //ed.putString(group_text, txt_rus);
-                //ed.apply();
-                //Settings.this.finish();
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putString(group_id, s);
@@ -162,7 +134,7 @@ public class Settings extends AppCompatActivity
                 editor.apply();
                 Settings.this.finish();
             }
-            //Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+            
         }
 
         @Override
