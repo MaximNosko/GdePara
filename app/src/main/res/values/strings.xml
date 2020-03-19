@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Где пара</string>
+    <string name="nastr_str">Настройки</string>
+    <string name="reloading">Обновление...</string>
+    <string name="group">Группа</string>
+    <string name="save_settings">Сохранить</string>
+    <string name="title_activity_settings">Settings</string>
+
+</resources>
