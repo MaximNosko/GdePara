@@ -158,8 +158,9 @@ public class MainActivity extends AppCompatActivity
                 {
                     Para tp=new Para(jsonArray.getJSONObject(i));
                     ps.list.add(tp);
-                    rez+=tp.toString();
+                    //rez+=tp.toString();
                 }
+                rez=ps.toString();
 
             }
             catch (Exception e)
