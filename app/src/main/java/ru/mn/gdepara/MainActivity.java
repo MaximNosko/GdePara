@@ -173,9 +173,12 @@ public class MainActivity extends AppCompatActivity
                 //String a=jsonObject.getString("auditorium");
                 //rez=a;
                 rez="";
+                ParaSet ps = new ParaSet();
                 for(int i=0;i<jsonArray.length();i++)
                 {
-                    rez+=new Para(jsonArray.getJSONObject(i)).toString();
+                    Para tp=new Para(jsonArray.getJSONObject(i));
+                    ps.list.add(tp);
+                    rez+=tp.toString();
                 }
 
             }
