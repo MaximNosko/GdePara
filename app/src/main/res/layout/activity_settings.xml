@@ -9,7 +9,8 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="@string/group" />
+        android:text="@string/group"
+        android:autofillHints="" />
     <Button
         android:id="@+id/saveSettings"
         android:layout_width="match_parent"
