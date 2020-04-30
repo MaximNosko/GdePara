@@ -24,6 +24,7 @@ public class ParaSet
         String rez="Вывод...";
         Date td=new Date();
         Date min=null;
+        int min_i=0;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
         //rez+=simpleDateFormat.format(td);
         for(int i=0;i<list.size();i++)
@@ -38,10 +39,12 @@ public class ParaSet
                 if(min==null)
                 {
                     min=list.get(i).beginTime;
+                    min_i=i;
                 }
                 else if(list.get(i).beginTime.before(min))
                 {
                     min=list.get(i).beginTime;
+                    min_i=i;
                 }
             }
         }
@@ -49,7 +52,10 @@ public class ParaSet
         if(min!=null)
         {
             //SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
-            rez=simpleDateFormat.format(min)+"\n"+"До пары "+((min.getHours()*60+min.getMinutes())-(td.getHours()*60+td.getMinutes()))+" мин";
+            rez=list.get(min_i).discipline+"\n";
+            rez+=list.get(min_i).lecturer+"\n";
+            rez+=list.get(min_i).auditorium+"\n";
+            rez+=simpleDateFormat.format(min)+"\n"+"До пары "+((min.getHours()*60+min.getMinutes())-(td.getHours()*60+td.getMinutes()))+" мин";
         }
         return rez;
     }
