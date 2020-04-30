@@ -13,5 +13,6 @@
         android:layout_height="305dp"
         android:text="@string/test_text"
         android:textAlignment="center"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        />
 </LinearLayout>
