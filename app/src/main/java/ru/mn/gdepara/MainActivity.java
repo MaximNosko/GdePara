@@ -72,10 +72,19 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
-                Snackbar.make(view, R.string.reloading, Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                Zapros z = new Zapros();
-                z.execute();
+                final SharedPreferences mSharedPreference= PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                if(mSharedPreference.getString(group_id, "").length()>0)
+                {
+                    Snackbar.make(view, R.string.reloading, Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    Zapros z = new Zapros();
+                    z.execute();
+                }
+                else
+                {
+                    Intent myIntent = new Intent(MainActivity.this, Settings.class);
+                    MainActivity.this.startActivity(myIntent);
+                }
 
             }
         });
@@ -111,7 +120,7 @@ public class MainActivity extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
-    class Zapros extends AsyncTask<Void, Void,String>
+    class Zapros extends AsyncTask<Void, Void,ParaSet>
     {
         SharedPreferences sPref;
         final String group_id="group_id";
@@ -127,10 +136,10 @@ public class MainActivity extends AppCompatActivity
         }
 
         @Override
-        protected String doInBackground(Void... strings)
+        protected ParaSet doInBackground(Void... strings)
         {
             OutputStream out = null;
-            String rez=":(";
+            //String rez=":(";
             try
             {
                 String pattern = "yyyy.MM.dd";
@@ -152,7 +161,7 @@ public class MainActivity extends AppCompatActivity
                 }
                 bufferedReader.close();
                 JSONArray jsonArray = new JSONArray(response.toString());
-                rez="";
+                //rez="";
                 ParaSet ps = new ParaSet();
                 for(int i=0;i<jsonArray.length();i++)
                 {
@@ -160,28 +169,49 @@ public class MainActivity extends AppCompatActivity
                     ps.list.add(tp);
                     //rez+=tp.toString();
                 }
-                rez=ps.toString();
-
+                //rez=ps.toString();
+                //rez=ps;
+                return ps;
             }
             catch (Exception e)
             {
-                rez=e.getMessage();
+                //rez=e.getMessage();
             }
-            return rez;
+            return null;
         }
 
         @Override
-        protected void onPostExecute(String s)
+        protected void onPostExecute(ParaSet ps)
         {
-            super.onPostExecute(s);
+            String s = ps.getCloser();
+            super.onPostExecute(ps);
             TextView textView = (TextView)findViewById(R.id.test_text);
             textView.setText(s);
+            TextView textViewSpisok=(TextView)findViewById(R.id.textViewSpisok);
+            String rez="";
+            for(int i=0;i<ps.list.size();i++)
+            {
+                rez+=ps.list.get(i).toString();
+            }
+            textViewSpisok.setText(rez);
         }
 
         @Override
         protected void onProgressUpdate(Void... values)
         {
             super.onProgressUpdate(values);
+        }
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        final SharedPreferences mSharedPreference = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        if(mSharedPreference.getString(group_id, "").length()>0)
+        {
+            Zapros z = new Zapros();
+            z.execute();
         }
     }
 }

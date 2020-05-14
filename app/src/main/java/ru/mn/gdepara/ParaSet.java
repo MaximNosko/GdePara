@@ -13,8 +13,7 @@ public class ParaSet
         list=new ArrayList<Para>();
     }
 
-    @Override
-    public String toString()
+    public String getCloser()
     {
         if(list.size()==0)
         {

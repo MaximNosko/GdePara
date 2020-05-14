@@ -45,6 +45,7 @@ public class Para
     public String toString()
     {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
-        return auditorium+"\t"+simpleDateFormat.format(beginTime)+"\t"+simpleDateFormat.format(endTime)+"\t"+discipline+"\t"+lecturer+"\n\n";
+        //return auditorium+"\t"+simpleDateFormat.format(beginTime)+"\t"+simpleDateFormat.format(endTime)+"\t"+discipline+"\t"+lecturer+"\n\n";
+        return auditorium+"\n"+simpleDateFormat.format(beginTime)+"\t"+simpleDateFormat.format(endTime)+"\n"+discipline+"\n"+lecturer+"\n\n";
     }
 }
