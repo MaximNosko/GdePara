@@ -41,16 +41,8 @@ public class Settings extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings2);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("Настройки");
         setSupportActionBar(toolbar);
-
-        /*FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
         Button saveButton=(Button)findViewById(R.id.saveSettings);
         saveButton.setOnClickListener(new View.OnClickListener()
         {
@@ -58,6 +50,7 @@ public class Settings extends AppCompatActivity
             public void onClick(View view)
             {
                 SZapros z = new SZapros();
+                z.knopka=(Button)view;
                 z.execute();
             }
         });
@@ -65,14 +58,12 @@ public class Settings extends AppCompatActivity
         String group_text_string=(sPref2.getString(group_text, ""));
         ((EditText)findViewById(R.id.groupInput)).setText(group_text_string);
         String group_id_string=(sPref2.getString(group_id, ""));
-        ((TextView)findViewById(R.id.showGroupId)).setText(group_id_string);
-
-
     }
     class SZapros extends AsyncTask<Void, Void,String>
     {
         public String txt;
         public String txt_rus;
+        public Button knopka;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -112,7 +103,7 @@ public class Settings extends AppCompatActivity
             }
             catch (Exception e)
             {
-                rez=e.getMessage();
+                rez="";
             }
             return rez;
         }

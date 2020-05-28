@@ -1,5 +1,8 @@
 package ru.mn.gdepara;
 
+import android.content.Context;
+import android.widget.LinearLayout;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,7 +16,7 @@ public class ParaSet
         list=new ArrayList<Para>();
     }
 
-    public String getCloser()
+    public String getCloser()//не будет использоваться
     {
         if(list.size()==0)
         {
@@ -25,13 +28,8 @@ public class ParaSet
         Date min=null;
         int min_i=0;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
-        //rez+=simpleDateFormat.format(td);
         for(int i=0;i<list.size();i++)
         {
-
-            //rez+=i;
-            //rez+=simpleDateFormat.format(list.get(i).beginTime);
-            //if(list.get(i).beginTime.after(td))
             if(list.get(i).beginTime.getHours()*60+list.get(i).beginTime.getMinutes()>td.getHours()*60+td.getMinutes())
             {
                 rez+=i;
@@ -50,7 +48,6 @@ public class ParaSet
         rez+=min;
         if(min!=null)
         {
-            //SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
             rez=list.get(min_i).discipline+"\n";
             rez+=list.get(min_i).lecturer+"\n";
             rez+=list.get(min_i).auditorium+"\n";

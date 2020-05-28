@@ -3,34 +3,24 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="89dp" />
-
     <TextView
-        android:id="@+id/test_text"
+        android:id="@+id/stroka"
         android:layout_width="match_parent"
-        android:layout_height="305dp"
-        android:text="@string/test_text"
-        android:textAlignment="center"
-        android:textSize="25sp"
-        android:textColor="@android:color/black"
+        android:layout_height="30sp"
+        android:text=""
         />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/spisok"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/textViewSpisok"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="TextView" />
-        </LinearLayout>
+    </LinearLayout>
     </ScrollView>
+
+
 </LinearLayout>

@@ -10,7 +10,11 @@
     <LinearLayout
         android:orientation="vertical" android:layout_width="match_parent"
         android:layout_height="match_parent">
-
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Введите название группы:" />
         <EditText
             android:id="@+id/groupInput"
             android:layout_width="match_parent"
@@ -19,11 +23,7 @@
             android:inputType="textPersonName"
             android:text="@string/group"
             android:autofillHints="" tools:ignore="LabelFor"/>
-        <TextView
-            android:id="@+id/showGroupId"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
+
         <Button
             android:id="@+id/saveSettings"
             android:layout_width="match_parent"

@@ -1,5 +1,7 @@
 package ru.mn.gdepara;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.preference.PreferenceManager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,12 +25,16 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.Space;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
@@ -65,7 +72,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener()
         {
@@ -78,6 +84,7 @@ public class MainActivity extends AppCompatActivity
                     Snackbar.make(view, R.string.reloading, Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                     Zapros z = new Zapros();
+                    z.l=findViewById(R.id.para_layout);
                     z.execute();
                 }
                 else
@@ -98,6 +105,7 @@ public class MainActivity extends AppCompatActivity
         else
         {
             Zapros z = new Zapros();
+            z.l=findViewById(R.id.para_layout);
             z.execute();
         }
     }
@@ -125,11 +133,12 @@ public class MainActivity extends AppCompatActivity
         SharedPreferences sPref;
         final String group_id="group_id";
         String loadedId;
+        public LinearLayout l;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            TextView textView = (TextView)findViewById(R.id.test_text);
-            textView.setText("Подготовка запроса...");
+            TextView textView = (TextView)findViewById(R.id.stroka);
+            textView.setText("Загрузка...");
             final SharedPreferences mSharedPreference= PreferenceManager.getDefaultSharedPreferences(getBaseContext());
             loadedId=(mSharedPreference.getString(group_id, ""));
 
@@ -139,7 +148,6 @@ public class MainActivity extends AppCompatActivity
         protected ParaSet doInBackground(Void... strings)
         {
             OutputStream out = null;
-            //String rez=":(";
             try
             {
                 String pattern = "yyyy.MM.dd";
@@ -161,21 +169,17 @@ public class MainActivity extends AppCompatActivity
                 }
                 bufferedReader.close();
                 JSONArray jsonArray = new JSONArray(response.toString());
-                //rez="";
                 ParaSet ps = new ParaSet();
                 for(int i=0;i<jsonArray.length();i++)
                 {
                     Para tp=new Para(jsonArray.getJSONObject(i));
                     ps.list.add(tp);
-                    //rez+=tp.toString();
                 }
-                //rez=ps.toString();
-                //rez=ps;
                 return ps;
             }
             catch (Exception e)
             {
-                //rez=e.getMessage();
+
             }
             return null;
         }
@@ -183,17 +187,27 @@ public class MainActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(ParaSet ps)
         {
-            String s = ps.getCloser();
             super.onPostExecute(ps);
-            TextView textView = (TextView)findViewById(R.id.test_text);
-            textView.setText(s);
-            TextView textViewSpisok=(TextView)findViewById(R.id.textViewSpisok);
-            String rez="";
-            for(int i=0;i<ps.list.size();i++)
+            TextView stroka = (TextView)findViewById(R.id.stroka);
+            if(ps == null)
             {
-                rez+=ps.list.get(i).toString();
+                stroka.setText("Ошибка");
+                return;
             }
-            textViewSpisok.setText(rez);
+            String pattern = "HH:mm dd.MM.yyyy";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+            String time = simpleDateFormat.format(new Date());
+            stroka.setText("Обновлено в "+time);
+            LinearLayout l=(LinearLayout)findViewById(R.id.spisok);
+            l.removeAllViews();
+            for (int i = 0; i < ps.list.size(); i++)
+            {
+                l.addView(ps.list.get(i).getLayout(getApplicationContext()));
+                Space s = new Space(getApplicationContext());
+                s.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,10));
+                //s.setHe
+                l.addView(s);
+            }
         }
 
         @Override
@@ -215,3 +229,4 @@ public class MainActivity extends AppCompatActivity
         }
     }
 }
+
