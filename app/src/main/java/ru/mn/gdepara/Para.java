@@ -103,9 +103,10 @@ public class Para
             }
             else
             {
-                DecimalFormat df = new DecimalFormat();
-                df.setMaximumFractionDigits(1);
-                n="Через "+df.format(min_do/60.0)+ " ч";
+                //DecimalFormat df = new DecimalFormat();
+                //df.setMaximumFractionDigits(1);
+                //n="Через "+df.format(min_do/60.0)+ " ч";
+                n="Через "+min_do/60+ ":"+min_do%60;
             }
         }
         else if(min_do>-90)
